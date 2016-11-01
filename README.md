@@ -19,10 +19,8 @@ You may need to install the following libraries :
 - [graphviz](http://www.graphviz.org/) and graphviz-dev
 - [pygraphviz](http://pygraphviz.github.io/documentation/latest/install.html)
 
-* how to install [pygraphviz](http://stackoverflow.com/questions/4571067/installing-pygraphviz-on-windows) on windows
-
-* remember to change _PAHT VARIABLE_ on windows. If using _Anaconda_, remember to add ``C:\Anaconda2\Library\bin\graphviz`` to _PAHT_ 
-
+* how to install [pygraphviz on windows](http://stackoverflow.com/questions/4571067/installing-pygraphviz-on-windows)
+* remember to change _PAHT VARIABLE_ on windows. If using _Anaconda_, remember to add ``C:\Anaconda2\Library\bin\graphviz`` to _PATH_ 
 * if non included in ``conda search`` or ``pip search``, you can try this [Unofficial Windows Binaries for Python Extension Packages](http://www.lfd.uci.edu/~gohlke/pythonlibs)
 
 
