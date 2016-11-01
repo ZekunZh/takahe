@@ -112,6 +112,7 @@ import re
 import sys
 import bisect
 import networkx as nx
+from networkx.drawing.nx_agraph import write_dot
 #import matplotlib.pyplot as plt
 
 #~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -984,7 +985,7 @@ class word_graph:
     #-T-----------------------------------------------------------------------T-
     def write_dot(self, dotfile):
         """ Outputs the word graph in dot format in the specified file. """
-        nx.write_dot(self.graph, dotfile)
+        write_dot(self.graph, dotfile)
     #-B-----------------------------------------------------------------------B-
 
 #~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
