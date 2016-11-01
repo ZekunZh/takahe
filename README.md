@@ -23,6 +23,10 @@ You may need to install the following libraries :
 * remember to change _PAHT VARIABLE_ on windows. If using _Anaconda_, remember to add ``C:\Anaconda2\Library\bin\graphviz`` to _PATH_ 
 * if non included in ``conda search`` or ``pip search``, you can try this [Unofficial Windows Binaries for Python Extension Packages](http://www.lfd.uci.edu/~gohlke/pythonlibs)
 
+You can rebuild environment using ``conda env create -f environment.yml``. [More infos](http://conda.pydata.org/docs/using/envs.html#use-environment-from-file)
+
+But still need to install [pygraphviz by hand](http://stackoverflow.com/questions/4571067/installing-pygraphviz-on-windows).
+
 
 
 ## Example
