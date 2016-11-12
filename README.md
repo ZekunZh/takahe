@@ -27,6 +27,7 @@ You can rebuild environment using ``conda env create -f environment.yml``. [More
 
 But still need to install [pygraphviz by hand](http://stackoverflow.com/questions/4571067/installing-pygraphviz-on-windows).
 
+Zekun, Wensi
 
 
 ## Example
