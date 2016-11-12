@@ -340,8 +340,8 @@ class word_graph:
                     for l in range(k):
 
                         # Get the immediate context words of the nodes
-                        l_context = self.get_directed_context(node, l, 'left')
-                        r_context = self.get_directed_context(node, l, 'right')
+                        l_context = self.get_directed_context((node, l), 'left')
+                        r_context = self.get_directed_context((node, l), 'right')
                         
                         # Compute the (directed) context sum
                         val = l_context.count(prev_node) 
@@ -391,7 +391,7 @@ class word_graph:
             print(self.hypernym_nodes(node[0]))
     #-B-----------------------------------------------------------------------B-
     def best_candidate(self, candidate_nodes, i, j):
-            # Create the neighboring nodes identifiers
+        # Create the neighboring nodes identifiers
         prev_token, prev_POS = self.sentence[i][j-1]
         next_token, next_POS = self.sentence[i][j+1]
         prev_node = prev_token.lower() + self.sep + prev_POS
@@ -472,12 +472,16 @@ class word_graph:
                 ent_candidate = ent.name().split('.')[0]
                 if ent_candidate not in cans:
                     cans.append(ent_candidate)
+
+
         for gnode in self.graph.nodes():
-            gword, gtag = gnode[0].split(self.sep)
-            gpos = self.tagging(gtag)
-            if (gpos == pos) and (gword != word):
-                if gword in cans:
-                    candidate_nodes.append(gnode)
+            print(gnode)
+            if gnode != 0:
+                gword, gtag = gnode[0].split(self.sep)
+                gpos = self.tagging(gtag)
+                if (gpos == pos) and (gword != word):
+                    if gword in cans:
+                        candidate_nodes.append(gnode)
         return candidate_nodes
 
     def synonym_nodes(self, node):
