@@ -183,7 +183,6 @@ class word_graph:
                     self.graph.add_node( (node, 0), info=[(i, j)],
                                          label=token.lower() )
                     mapping[j] = (node,0)
-                    print (node, 0)
                     continue
                 if j==0:
                     self.graph.node[(node,0)]['info'].append((i,j))
@@ -193,7 +192,6 @@ class word_graph:
                     self.graph.add_node( (node, 0), info=[(i, j)],
                                          label=token.lower() )
                     mapping[j] = (node,0)
-                    print (node, 0)
                     continue
                 if j==(sentence_len-1):
                     self.graph.node[(node,0)]['info'].append((i,j))
@@ -212,7 +210,6 @@ class word_graph:
                     self.graph.add_node( (node, 0), info=[(i, j)],
                                          label=token.lower() )
                     mapping[j] = (node,0)
-                    print (node,0)
                     continue
 
                 first_candidates = []
@@ -231,7 +228,6 @@ class word_graph:
                 if (k_net == 0) and (c_net==0):
                     self.graph.add_node((node, k), info=[(i, j)],label=token.lower() )
                     mapping[j] = (node,k)
-                    print (node,0)
                     continue
                 elif (k_net == 0) and (c_net!= 0):
                     result = self.best_candidate(sec_candidates,i,j)
@@ -410,7 +406,6 @@ class word_graph:
             #-------------------------------------------------------------------
             # 4. Connects the mapped words with directed edges
             #-------------------------------------------------------------------
-            print mapping
             for j in range(1, len(mapping)):
                 self.graph.add_edge(mapping[j-1], mapping[j])
 
@@ -453,12 +448,12 @@ class word_graph:
             ambinode_frequency.append(
                 len( self.graph.node[candidate_nodes[l]]['info'] )
             )
-            # Select the ambiguous node
-            selected = self.max_index(ambinode_overlap)
-            if ambinode_overlap[selected] == 0:
-                selected = self.max_index(ambinode_frequency)
-            
-            return selected
+        # Select the ambiguous node
+        selected = self.max_index(ambinode_overlap)
+        if ambinode_overlap[selected] == 0:
+            selected = self.max_index(ambinode_frequency)
+        
+        return selected
         
     #-T-----------------------------------------------------------------------T-
     def ambiguous_nodes(self, node):
