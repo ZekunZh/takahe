@@ -152,6 +152,7 @@ class word_graph:
         """     
 
         # Iteratively add each sentence in the graph ---------------------------
+
         for i in range(self.length):
 
             # Compute the sentence length
@@ -177,6 +178,29 @@ class word_graph:
                 # Create the node identifier
                 node = token.lower() + self.sep + POS
 
+                # Treat '-start-/-/-start-' and '-end-/-/-end-'
+                if (i==0) and (j==0):
+                    self.graph.add_node( (node, 0), info=[(i, j)],
+                                         label=token.lower() )
+                    mapping[j] = (node,0)
+                    print (node, 0)
+                    continue
+                if j==0:
+                    self.graph.node[(node,0)]['info'].append((i,j))
+                    mapping[j] = (node,0)
+                    continue
+                if (i==0) and (j==(sentence_len-1)):
+                    self.graph.add_node( (node, 0), info=[(i, j)],
+                                         label=token.lower() )
+                    mapping[j] = (node,0)
+                    print (node, 0)
+                    continue
+                if j==(sentence_len-1):
+                    self.graph.node[(node,0)]['info'].append((i,j))
+                    mapping[j] = (node,0)
+                    continue
+
+
                 # Find the number of ambiguous nodes in the graph
                 k = self.ambiguous_nodes(node)
 
@@ -188,6 +212,8 @@ class word_graph:
                     self.graph.add_node( (node, 0), info=[(i, j)],
                                          label=token.lower() )
                     mapping[j] = (node,0)
+                    print (node,0)
+                    continue
 
                 first_candidates = []
                 for ki in range(k):
@@ -203,8 +229,10 @@ class word_graph:
                 c_net = len(sec_candidates)
                 
                 if (k_net == 0) and (c_net==0):
-                    self.graph.add_node((node, k+1), info=[(i, j)],label=token.lower() )
-                    mapping[j] = (node,k+1)
+                    self.graph.add_node((node, k), info=[(i, j)],label=token.lower() )
+                    mapping[j] = (node,k)
+                    print (node,0)
+                    continue
                 elif (k_net == 0) and (c_net!= 0):
                     result = self.best_candidate(sec_candidates,i,j)
                     self.graph.node[sec_candidates[result]]['info'].append((i,j))
@@ -215,7 +243,7 @@ class word_graph:
                     mapping[j] = first_candidates[result]
             
             #-------------------------------------------------------------------
-            # 3. map the stopwords to the nodes
+            # 2. map the stopwords to the nodes
             #-------------------------------------------------------------------
             for j in range(sentence_len):
 
@@ -238,6 +266,8 @@ class word_graph:
                     # Add the node in the graph
                     self.graph.add_node( (node, 0), info=[(i, j)], 
                                          label=token.lower() )
+                    # Mark the word as mapped to k
+                    mapping[j] = (node,0)
    
                 # Else find the node with overlap in context or create one
                 else:
@@ -298,7 +328,7 @@ class word_graph:
                         mapping[j] = (node, k)
 
             #-------------------------------------------------------------------
-            # 4. lasty map the punctuation marks to the nodes
+            # 3. lasty map the punctuation marks to the nodes
             #-------------------------------------------------------------------
             for j in range(sentence_len):
 
@@ -380,15 +410,15 @@ class word_graph:
             #-------------------------------------------------------------------
             # 4. Connects the mapped words with directed edges
             #-------------------------------------------------------------------
+            print mapping
             for j in range(1, len(mapping)):
                 self.graph.add_edge(mapping[j-1], mapping[j])
 
         # Assigns a weight to each node in the graph ---------------------------
         for node1, node2 in self.graph.edges_iter():
-            edge_weight = self.get_edge_weight(node1, node2)
+            edge_weight = self.get_edge_weight(node1,node2)
             self.graph.add_edge(node1, node2, weight=edge_weight)
-        for node in self.graph.nodes():
-            print(self.hypernym_nodes(node[0]))
+
     #-B-----------------------------------------------------------------------B-
     def best_candidate(self, candidate_nodes, i, j):
         # Create the neighboring nodes identifiers
@@ -475,7 +505,6 @@ class word_graph:
 
 
         for gnode in self.graph.nodes():
-            print(gnode)
             if gnode != 0:
                 gword, gtag = gnode[0].split(self.sep)
                 gpos = self.tagging(gtag)

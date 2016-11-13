@@ -27,6 +27,8 @@ You can rebuild environment using ``conda env create -f environment.yml``. [More
 
 But still need to install [pygraphviz by hand](http://stackoverflow.com/questions/4571067/installing-pygraphviz-on-windows).
 
+* output `.dot` to `.png`
+``dot -Tps filename.dot -o outfile.ps``
 
 
 ## Example

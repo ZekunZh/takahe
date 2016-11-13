@@ -595,6 +595,7 @@ class word_graph:
             #-------------------------------------------------------------------
             # 4. Connects the mapped words with directed edges
             #-------------------------------------------------------------------
+            print mapping
             for j in range(1, len(mapping)):
                 self.graph.add_edge(mapping[j-1], mapping[j])
 
